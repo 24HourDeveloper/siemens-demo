@@ -1,34 +1,19 @@
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text } from 'react-native'
 import { useEffect, useState } from 'react'
-import { Image } from 'expo-image';
+import { type ErrorBoundaryProps } from 'expo-router'
+import { IconSymbol } from '@/components/ui/IconSymbol';
+import { WeatherType } from '@/types'
+import CurrentView from '@/components/CurrentView'
+import ForecastListView from '@/components/ForecastListView'
 
-type WeatherType = {
-  current: {
-    condition: {
-      text: string
-      icon: string
-    },
-    temp_f: number,
-    feelslike_f: number,
-    humidity: number,
-  },
-  forecast: {
-    forecastday: {
-      date: string,
-      day: {
-        condition: {
-          text: string
-        },
-        maxtemp_f: number,
-        mintemp_f: number
-      }
-    }[]
-  }
-}
-
-const formatToDay = (date: string) => {
-  const dateObj = new Date(date)
-  return dateObj.toLocaleDateString('en-US', { weekday: 'short' })
+export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text style={{ fontSize: 30}}>Sorry problem fetching weather.</Text>
+      <IconSymbol size={50} name="circle.slash" color="red" />
+      <Text onPress={retry}>Try Again?</Text>
+    </View>
+  );
 }
 
 export default function Weather() {
@@ -52,37 +37,13 @@ export default function Weather() {
       </View>
     )
   }
+  
+  const { forecastday } = weather.forecast
 
   return (
-    <View>
-      <View style={{ display: 'flex', alignItems: 'center', gap: 10}}>
-        <Text>{weather.current.condition.text}</Text>
-        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{ fontSize: 48}}>{weather.current.temp_f}</Text>
-          <Image
-            source={{ uri: `https:${weather.current.condition.icon}` }}
-            style={{ width: 60, height: 60 }}
-          />
-        </View>
-        <Text>Feels like {weather.current.feelslike_f}°</Text>
-        <Text>Humidity: {weather.current.humidity}°</Text>
-      </View>
-      <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10}}>  
-        <Text>5 Day Forecast</Text>
-        <ScrollView horizontal contentContainerStyle={{ display: 'flex', width: '90%', gap: 10}}>
-          {weather.forecast.forecastday.map((day: any) => (
-            <View key={day.date} style={{borderWidth: 1, borderRadius: 8, display: 'flex', alignItems: 'center', padding: 10}}>
-              <Text>{formatToDay(day.date)}</Text>
-              <Image
-                source={{ uri: `https:${day.day.condition.icon}` }}
-                style={{ width: 60, height: 60 }}
-              />
-              <Text>{day.day.maxtemp_f}°</Text>
-              <Text>{day.day.mintemp_f}°</Text>
-            </View>
-          ))}
-        </ScrollView>
-      </View>
-    </View>
+    <>
+      <CurrentView weather={weather} />
+      <ForecastListView forecastDays={forecastday} />
+    </>
   )
 }
