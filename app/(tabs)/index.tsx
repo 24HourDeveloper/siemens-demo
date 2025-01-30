@@ -1,10 +1,9 @@
 import { View, Text } from 'react-native'
-import { useEffect, useState } from 'react'
 import { type ErrorBoundaryProps } from 'expo-router'
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import { WeatherType } from '@/types'
 import CurrentView from '@/components/CurrentView'
 import ForecastListView from '@/components/ForecastListView'
+import useForecast from '@/hooks/useForecast';
 
 export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
   return (
@@ -17,18 +16,7 @@ export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
 }
 
 export default function Weather() {
-  const [weather, setWeather] = useState<WeatherType | null>(null)
-  const { EXPO_PUBLIC_FORECAST_URL, EXPO_PUBLIC_WEATHER_API_KEY } = process.env
-  const url = `${EXPO_PUBLIC_FORECAST_URL}${EXPO_PUBLIC_WEATHER_API_KEY}&q=30331&days=5&aqi=no&alerts=no`
-  const fetchWeather = async () => {
-    const response = await fetch(url)
-    const data = await response.json()
-    setWeather(data)
-  }
-
-  useEffect(() => {
-    fetchWeather()
-  }, [])
+  const weather = useForecast()
 
   if (!weather) {
     return (
@@ -38,12 +26,10 @@ export default function Weather() {
     )
   }
   
-  const { forecastday } = weather.forecast
-
   return (
     <>
       <CurrentView weather={weather} />
-      <ForecastListView forecastDays={forecastday} />
+      <ForecastListView forecastDays={weather.forecast.forecastday} />
     </>
   )
 }
