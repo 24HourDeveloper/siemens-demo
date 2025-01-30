@@ -16,7 +16,8 @@ const MAPPING = {
   'wifi': 'wifi',
   'cloud': 'cloud-queue',
   'qrcode': 'qr-code',
-  'antenna.radiowaves.left.and.right': 'bluetooth'
+  'antenna.radiowaves.left.and.right': 'bluetooth',
+  'circle.slash': 'dnd-forwardslash',
 } as Partial<
   Record<
     import('expo-symbols').SymbolViewProps['name'],
