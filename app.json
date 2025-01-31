@@ -25,7 +25,8 @@
       "permissions": [
         "android.permission.BLUETOOTH",
         "android.permission.BLUETOOTH_ADMIN",
-        "android.permission.BLUETOOTH_CONNECT"
+        "android.permission.BLUETOOTH_CONNECT",
+        "android.permission.ACCESS_FINE_LOCATION"
       ],
       "package": "com.uncodedlifestyle.siemensdemo"
     },
@@ -50,6 +51,15 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "FORECAST_URL": "http://api.weatherapi.com/v1/forecast.json?key=",
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "36255f88-2551-4161-816b-0598ce7dfc1b"
+      }
     }
   }
 }

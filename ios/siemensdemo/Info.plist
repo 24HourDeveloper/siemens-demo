@@ -55,6 +55,8 @@
     <string>This app uses Bluetooth to connect to the Siemens device.</string>
     <key>NSBluetoothPeripheralUsageDescription</key>
     <string>This app uses Bluetooth to connect to the Siemens device.</string>
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>The app requires access to the local network so it can...</string>
     <key>NSUserActivityTypes</key>
     <array>
       <string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>
