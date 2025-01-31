@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { Text, StyleSheet, View, FlatList, TouchableOpacity, Modal } from 'react-native'
 import { Characteristic } from 'react-native-ble-plx'
 import { ThemedText } from '@/components/ThemedText'
-import { useThemeColor } from '@/hooks/useThemeColor';
-import useBluetooth from '@/hooks/useBluetooth';
-import { decodeManufacturerData } from '@/utils/decodeManufacturerData';
+import { useThemeColor } from '@/hooks/useThemeColor'
+import useBluetooth from '@/hooks/useBluetooth'
+import { decodeManufacturerData } from '@/utils/decodeManufacturerData'
 
 const CharacterList = ({ characterList }: { characterList: Characteristic[]}) => (
   <FlatList
