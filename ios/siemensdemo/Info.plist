@@ -52,7 +52,9 @@
       <true/>
     </dict>
     <key>NSBluetoothAlwaysUsageDescription</key>
-    <string>Allow $(PRODUCT_NAME) to connect to bluetooth devices</string>
+    <string>This app uses Bluetooth to connect to the Siemens device.</string>
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>This app uses Bluetooth to connect to the Siemens device.</string>
     <key>NSUserActivityTypes</key>
     <array>
       <string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>
@@ -82,10 +84,6 @@
     <key>UIUserInterfaceStyle</key>
     <string>Automatic</string>
     <key>UIViewControllerBasedStatusBarAppearance</key>
-    <key>NSBluetoothAlwaysUsageDescription</key>
-    <string>We use Bluetooth to connect to nearby devices.</string>
-    <key>NSBluetoothPeripheralUsageDescription</key>
-    <string>We use Bluetooth to communicate with BLE peripherals.</string>
     <false/>
   </dict>
 </plist>

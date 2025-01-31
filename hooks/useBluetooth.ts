@@ -71,12 +71,12 @@ export default function useBluetooth() {
       const connectedDevice = await bluetoothManager.connectToDevice(device.id)
       await connectedDevice.discoverAllServicesAndCharacteristics()
       const services = await connectedDevice.services()
-      console.log('SERVICES:', services)
+
       for (const service of services) {
         const chars = await service.characteristics()
         allCharacteristics.push(...chars)
       }
-      console.log('characteristics:', allCharacteristics)
+
       setConnectedDevice(connectedDevice)
       setCharacteristics(allCharacteristics)
       return true

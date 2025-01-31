@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { Text, StyleSheet, View, FlatList, TouchableOpacity, Modal } from 'react-native'
 import { Characteristic } from 'react-native-ble-plx'
 import { ThemedText } from '@/components/ThemedText'
-import { useThemeColor } from '@/hooks/useThemeColor'
 import useBluetooth from '@/hooks/useBluetooth'
 import { decodeManufacturerData } from '@/utils/decodeManufacturerData'
+import HardwareHeader from '@/components/HardwareHeader'
+import ScannedList from '@/components/ScannedList'
 
 const CharacterList = ({ characterList }: { characterList: Characteristic[]}) => (
   <FlatList
@@ -16,41 +17,36 @@ const CharacterList = ({ characterList }: { characterList: Characteristic[]}) =>
       </View>
     )}
   />
-);
+)
 
 export default function bluetooth() {
   const [modalVisible, setModalVisible] = useState(false)
-  const color = useThemeColor({ light: "black", dark: 'white' }, 'text')
   const { devices, scanAndConnect, connectToDevice, connectedDevice, characteristics } = useBluetooth()
 
   return (
     <View style={{ padding: 10 }}>
-      <View style={styles.container}>
-        <ThemedText style={{ fontSize: 20 }}>Devices: {devices.length}</ThemedText>
-        <TouchableOpacity onPress={scanAndConnect}  style={[styles.scannedItem, {borderColor: color}]}>
-          <ThemedText style={{ fontSize: 20 }}>Scan devices</ThemedText>
-        </TouchableOpacity>
-      </View>
-      <FlatList
-        data={devices}
-        renderItem={({ item }) => {
-        return (
-          <TouchableOpacity
-            onPress={async () => {
-              const shouldOpenModal = await connectToDevice(item)
-              if (shouldOpenModal) {
-                setModalVisible(true)
-              }
-            }}
-            style={[styles.scannedItem, {borderColor: color}]}
-          >
+      <HardwareHeader
+        scanAction={scanAndConnect}
+        scanBtnText="Scan Devices"
+        title={`Devices: ${devices.length}`}
+      />
+      <ScannedList
+        items={devices}
+        onPress={async () => {
+          const shouldOpenModal = await connectToDevice(devices[0])
+          if (shouldOpenModal) {
+            setModalVisible(true)
+          }
+        }}
+      >
+        {(item) => (
+          <>
             <ThemedText>id: {item.id}</ThemedText>
             <ThemedText>Manuf: {decodeManufacturerData(item.manufacturerData)?.companyIdentifier}</ThemedText>
             <ThemedText>Connectable: {item.isConnectable ? 'true' : 'false'}</ThemedText>
-          </TouchableOpacity>
-        )}}
-        keyExtractor={item => item.id}
-      />
+          </>
+        )}
+      </ScannedList>
       <Modal
         animationType="slide"
         transparent={true}
@@ -75,14 +71,6 @@ export default function bluetooth() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    gap: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 20
-  },
   modalView: {
     flex: 1,
     backgroundColor: 'white',
@@ -112,11 +100,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 16,
     fontWeight: 'bold',
-  },
-  scannedItem: {
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 8,
-    marginBottom: 10
   }
-});
+})
