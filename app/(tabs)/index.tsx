@@ -1,9 +1,13 @@
-import { View, Text } from 'react-native'
+import { useState } from 'react'
+import { View, Text, ActivityIndicator } from 'react-native'
 import { type ErrorBoundaryProps } from 'expo-router'
 import { IconSymbol } from '@/components/ui/IconSymbol'
 import CurrentView from '@/components/CurrentView'
 import ForecastListView from '@/components/ForecastListView'
 import useForecast from '@/hooks/useForecast'
+import WeatherSearch from '@/components/WeatherSearch'
+import useWeatherSearch from '@/hooks/useWeatherSearch'
+import LastFiveSearch from '@/components/LastFiveSearch'
 
 export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
   return (
@@ -16,20 +20,29 @@ export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
 }
 
 export default function Weather() {
-  const weather = useForecast()
+  const [lastFive, setLastFive] = useState<string[]>([])
+  const {searchWeather, search} = useWeatherSearch()
+  const weather = useForecast(search)
 
   if (!weather) {
     return (
-      <View>
-        <Text>Loading...</Text>
+      <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 1}}>
+        <ActivityIndicator size="large" />
       </View>
     )
   }
+
+  const handleLastFive = (item: string) => {
+    searchWeather(item)
+    setLastFive((prev: string[]) => [...prev, item])
+  }
   
   return (
-    <>
+    <View style={{padding: 10}}>
+      <WeatherSearch setLastFive={handleLastFive}/>
       <CurrentView weather={weather} />
       <ForecastListView forecastDays={weather.forecast.forecastday} />
-    </>
+      <LastFiveSearch items={lastFive} />
+    </View>
   )
 }
