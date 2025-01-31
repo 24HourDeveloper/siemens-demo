@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react'
 import { WeatherType } from '@/types'
+import Constants from 'expo-constants'
+// import { WEATHER_API_KEY } from '@env'
 
 export default function useForecast() {
     const [weather, setWeather] = useState<WeatherType | null>(null)
-    const { EXPO_PUBLIC_FORECAST_URL, EXPO_PUBLIC_WEATHER_API_KEY } = process.env
-    const url = `${EXPO_PUBLIC_FORECAST_URL}${EXPO_PUBLIC_WEATHER_API_KEY}&q=30331&days=5&aqi=no&alerts=no`
+    console.log(process.env)
+    const FORECAST_URL = Constants.expoConfig?.extra?.FORECAST_URL
+    const { WEATHER_API_KEY } = process.env
+    const url = `${FORECAST_URL}${WEATHER_API_KEY}&q=30331&days=5&aqi=no&alerts=no`
 
     const fetchWeather = async () => {
       try {
