@@ -1,9 +1,9 @@
 import { View, Text } from 'react-native'
 import { type ErrorBoundaryProps } from 'expo-router'
-import { IconSymbol } from '@/components/ui/IconSymbol';
+import { IconSymbol } from '@/components/ui/IconSymbol'
 import CurrentView from '@/components/CurrentView'
 import ForecastListView from '@/components/ForecastListView'
-import useForecast from '@/hooks/useForecast';
+import useForecast from '@/hooks/useForecast'
 
 export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
   return (
@@ -12,7 +12,7 @@ export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
       <IconSymbol size={50} name="circle.slash" color="red" />
       <Text onPress={retry}>Try Again?</Text>
     </View>
-  );
+  )
 }
 
 export default function Weather() {

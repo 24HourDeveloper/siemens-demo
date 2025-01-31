@@ -16,7 +16,7 @@ const CharacterList = ({ characterList }: { characterList: Characteristic[]}) =>
       </View>
     )}
   />
-);
+)
 
 export default function bluetooth() {
   const [modalVisible, setModalVisible] = useState(false)
@@ -119,4 +119,4 @@ const styles = StyleSheet.create({
     padding: 8,
     marginBottom: 10
   }
-});
+})
