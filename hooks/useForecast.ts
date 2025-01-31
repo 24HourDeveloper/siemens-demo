@@ -6,9 +6,8 @@ import Constants from 'expo-constants'
 export default function useForecast(location: string) {
     const [weather, setWeather] = useState<WeatherType | null>(null)
     console.log(process.env)
-    const FORECAST_URL = Constants.expoConfig?.extra?.FORECAST_URL
     const { WEATHER_API_KEY } = process.env
-    const url = `${FORECAST_URL}${WEATHER_API_KEY}&q=${location}&days=5&aqi=no&alerts=no`
+    const url = `http://api.weatherapi.com/v1/forecast.json?key=${WEATHER_API_KEY}&q=${location}&days=5&aqi=no&alerts=no`
 
     const fetchWeather = async () => {
       try {
