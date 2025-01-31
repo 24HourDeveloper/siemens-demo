@@ -1,23 +1,26 @@
-import { Text, View, ScrollView, StyleSheet } from 'react-native'
+import { View, ScrollView, StyleSheet } from 'react-native'
 import React from 'react'
 import { Image } from 'expo-image'
 import { formatToDay } from '@/utils/formatToDay'
 import { WeatherDayType } from '@/types'
+import { useThemeColor } from '@/hooks/useThemeColor'
+import { ThemedText } from './ThemedText'
 
 export default function ForecastListView({ forecastDays }: { forecastDays: WeatherDayType[] }) {
+  const color = useThemeColor({ light: "black", dark: 'white' }, 'text')
   return (
     <View style={styles.container}>  
-      <Text>5 Day Forecast</Text>
+      <ThemedText>5 Day Forecast</ThemedText>
       <ScrollView horizontal contentContainerStyle={styles.forecastScrollContainer}>
         {forecastDays.map((dayOfWeek: WeatherDayType) => (
-          <View key={dayOfWeek.date} style={styles.forecastItem}>
-            <Text>{formatToDay(dayOfWeek.date)}</Text>
+          <View key={dayOfWeek.date} style={[styles.forecastItem, { borderColor: color }]}>
+            <ThemedText>{formatToDay(dayOfWeek.date)}</ThemedText>
             <Image
               source={{ uri: `https:${dayOfWeek.day.condition.icon}` }}
               style={{ width: 60, height: 60 }}
             />
-            <Text>{dayOfWeek.day.maxtemp_f}°</Text>
-            <Text>{dayOfWeek.day.mintemp_f}°</Text>
+            <ThemedText>{dayOfWeek.day.maxtemp_f}°</ThemedText>
+            <ThemedText>{dayOfWeek.day.mintemp_f}°</ThemedText>
           </View>
         ))}
       </ScrollView>
@@ -30,7 +33,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 10
+    gap: 10,
+    marginTop: 20
   },
   forecastScrollContainer: {
     display: 'flex',

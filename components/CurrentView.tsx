@@ -1,20 +1,23 @@
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import React from 'react'
+import { Image } from 'expo-image'
 import { WeatherType } from '@/types'
+import { ThemedText } from './ThemedText'
 
 export default function CurrentView({ weather }: { weather: WeatherType }) {
   return (
     <View style={styles.container}>
-      <Text>{weather.current.condition.text}</Text>
+      <ThemedText>{weather.current.condition.text}</ThemedText>
       <View style={styles.currentTemp}>
-          <Text style={{ fontSize: 48 }}>{weather.current.temp_f}</Text>
-          <Image
+        <ThemedText style={{ fontSize: 48, lineHeight: 48 }}>{weather.current.temp_f}</ThemedText>
+        <Image
           source={{ uri: `https:${weather.current.condition.icon}` }}
-          style={{ width: 60, height: 60 }}
-          />
+          style={{ width: 20, height: 50 }}
+          contentFit='cover'
+        />
       </View>
-      <Text>Feels like {weather.current.feelslike_f}°</Text>
-      <Text>Humidity: {weather.current.humidity}°</Text>
+      <ThemedText>Feels like {weather.current.feelslike_f}°</ThemedText>
+      <ThemedText>Humidity: {weather.current.humidity}°</ThemedText>
     </View>
   )
 }
@@ -28,7 +31,6 @@ const styles = StyleSheet.create({
   currentTemp: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'baseline',
   }
 })
