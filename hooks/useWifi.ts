@@ -2,8 +2,11 @@ import { PermissionsAndroid, Alert } from 'react-native'
 import { useState, useEffect } from 'react'
 import WifiManager, { WifiEntry } from "react-native-wifi-reborn"
 
+type WifiTypes = WifiEntry & {
+  id: string
+}
 export default function useWifi() {
-  const [wifiList, setWifiList] = useState<WifiEntry[]>([])
+  const [wifiList, setWifiList] = useState<WifiTypes[]>([])
   const [connectedSSID, setConnectedSSID] = useState<string | null>(null)
   
   const requestPermissions = async () => {
@@ -23,7 +26,7 @@ export default function useWifi() {
         return networks.filter((network) => {
           const isDuplicate = prevNetworks.some(n => n.SSID === network.SSID)
           return isDuplicate ? prevNetworks : [...prevNetworks, network]
-        })
+        }).map((network) => ({ ...network, id: network.BSSID }))
       })
     } catch (error) {
       console.error("Error scanning Wi-Fi", error)
