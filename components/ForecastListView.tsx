@@ -10,20 +10,20 @@ export default function ForecastListView({ forecastDays }: { forecastDays: Weath
   const color = useThemeColor({ light: "black", dark: 'white' }, 'text')
   return (
     <View style={styles.container}>  
-      <ThemedText>5 Day Forecast</ThemedText>
+      <ThemedText type="title">5 Day Forecast</ThemedText>
       <FlatList
         data={forecastDays}
         horizontal
         keyExtractor={(item) => item.date}
         renderItem={({ item }) => (
           <View style={[styles.forecastItem, { borderColor: color }]}>
-            <ThemedText>{formatToDay(item.date)}</ThemedText>
+            <ThemedText style={{ fontSize: 22 }}>{formatToDay(item.date)}</ThemedText>
             <Image
               source={{ uri: `https:${item.day.condition.icon}` }}
               style={{ width: 60, height: 60 }}
             />
-            <ThemedText>{item.day.maxtemp_f}°</ThemedText>
-            <ThemedText>{item.day.mintemp_f}°</ThemedText>
+            <ThemedText style={{ fontSize: 22 }}>{item.day.maxtemp_f}°</ThemedText>
+            <ThemedText style={{ fontSize: 22 }}>{item.day.mintemp_f}°</ThemedText>
           </View>
         )}
         contentContainerStyle={styles.forecastScrollContainer}
@@ -37,9 +37,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 10,
+    gap: 20,
     marginTop: 20,
-    padding: 10
   },
   forecastScrollContainer: {
     display: 'flex',
@@ -47,9 +46,10 @@ const styles = StyleSheet.create({
   },
   forecastItem: {
     borderWidth: 1,
-    borderRadius: 8,
+    borderRadius: 10,
     display: 'flex',
     alignItems: 'center',
-    padding: 10
+    padding: 10,
+    
   }
 })
