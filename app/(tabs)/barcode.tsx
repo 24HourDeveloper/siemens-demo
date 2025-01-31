@@ -1,24 +1,23 @@
-import React, { useState } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
-import { Camera } from 'react-native-camera-kit';
-import { ThemedText } from '@/components/ThemedText';
+import React, { useState } from 'react'
+import { View, FlatList, StyleSheet } from 'react-native'
+import { Camera } from 'react-native-camera-kit'
+import { ThemedText } from '@/components/ThemedText'
 import { useThemeColor } from '@/hooks/useThemeColor'
 
 export default function BarcodeScanner() {
-  const [scannedCodes, setScannedCodes] = useState<string[]>([]);
+  const [scannedCodes, setScannedCodes] = useState<string[]>([])
   const color = useThemeColor({ light: "black", dark: 'white' }, 'text')
 
   const onBarcodeScan = (event: { nativeEvent: { codeStringValue: string } }) => {
-    console.log('first barcode scan', event.nativeEvent);
-    const scannedValue = event.nativeEvent.codeStringValue;
+    const scannedValue = event.nativeEvent.codeStringValue
 
     if (!scannedCodes.includes(scannedValue)) {
       setScannedCodes((prev) => {
-        const newScans = [scannedValue, ...prev];
-        return newScans.slice(0, 5); 
-      });
+        const newScans = [scannedValue, ...prev]
+        return newScans.slice(0, 5) 
+      })
     }
-  };
+  }
 
   return (
     <View style={styles.container}>
@@ -45,7 +44,7 @@ export default function BarcodeScanner() {
         />
       </View>
     </View>
-  );
+  )
 };
 
 const styles = StyleSheet.create({
@@ -62,4 +61,4 @@ const styles = StyleSheet.create({
     padding: 8,
     marginBottom: 10
   }
-});
+})
