@@ -36,7 +36,7 @@ export default function Weather() {
     searchWeather(item)
     setLastFive((prev: string[]) => [...prev, item])
   }
-  
+
   return (
     <View style={{padding: 10}}>
       <WeatherSearch setLastFive={handleLastFive}/>

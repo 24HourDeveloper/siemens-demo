@@ -26,17 +26,23 @@ export default{
         "android.permission.BLUETOOTH",
         "android.permission.BLUETOOTH_ADMIN",
         "android.permission.BLUETOOTH_CONNECT",
-        "android.permission.ACCESS_FINE_LOCATION"
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.INTERNET"
       ],
       package: "com.uncodedlifestyle.siemensdemo"
     },
     web: {
       bundler: "metro",
-      output: "static",
+      output: "server",
       favicon: "./assets/images/favicon.png"
     },
     plugins: [
-      "expo-router",
+      [
+        "expo-router",
+        {
+          "origin": "http://localhost:8081/",
+        }
+      ],
       "react-native-ble-plx",
       "react-native-wifi-reborn",
       [
@@ -53,8 +59,6 @@ export default{
       typedRoutes: true
     },
     extra: {
-      FORECAST_URL: "http://api.weatherapi.com/v1/forecast.json?key=",
-      WEATHER_API_KEY: process.env.WEATHER_API_KEY,
       router: {
         origin: false
       },
