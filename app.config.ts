@@ -40,7 +40,9 @@ export default{
       [
         "expo-router",
         {
-          "origin": "http://localhost:8081/",
+          "origin": process.env.NODE_ENV === "development"
+            ? "http://localhost:8081/" :
+            "https://siemens-demo.uncodedlifestyle.com/",
         }
       ],
       "react-native-ble-plx",
