@@ -1,4 +1,4 @@
-import { View, ScrollView, StyleSheet, FlatList } from 'react-native'
+import { View, StyleSheet, FlatList } from 'react-native'
 import React from 'react'
 import { Image } from 'expo-image'
 import { formatToDay } from '@/utils/formatToDay'
@@ -46,11 +46,18 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   forecastItem: {
-    borderWidth: 1,
     borderRadius: 10,
     display: 'flex',
     alignItems: 'center',
     padding: 10,
-    
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
+    elevation: 2,
+    backgroundColor: 'white',
   }
 })

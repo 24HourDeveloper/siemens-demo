@@ -2,23 +2,23 @@ import { TextInput, StyleSheet, View, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { ThemedText } from './ThemedText'
 import { useThemeColor } from '@/hooks/useThemeColor'
+import { useColorScheme } from '@/hooks/useColorScheme'
 
 type WeatherSearchTypes = {
   setLastFive: (text: string) => void
 }
 
 export default function WeatherSearch({ setLastFive }: WeatherSearchTypes) {
-  const color = useThemeColor({ light: "black", dark: 'white' }, 'text')
+  const theme = useColorScheme() ?? 'light'
   const [input, setInput] = useState('')
-
   return (
     <View style={styles.container}>
       <TextInput placeholder="Search for a city" style={styles.searchInput} onChangeText={(text) => setInput(text)}/>
       <TouchableOpacity
         onPress={() => setLastFive(input)}
-        style={[styles.scannedItem, {borderColor: color}]}
+        style={[styles.scannedItem, {backgroundColor: theme === 'light' ? 'black' : 'white'}]}
       >
-          <ThemedText style={{ fontSize: 22 }}>Search</ThemedText>
+          <ThemedText style={{ fontSize: 22, color: theme === 'light' ? 'white' : 'black' }}>Search</ThemedText>
       </TouchableOpacity>
     </View>
   )
@@ -26,15 +26,22 @@ export default function WeatherSearch({ setLastFive }: WeatherSearchTypes) {
 
 const styles = StyleSheet.create({
   searchInput: {
-    borderWidth: 1,
     fontSize: 22,
     borderRadius: 10,
     height: 50,
     paddingLeft: 10,
-    flex: 3
+    flex: 3,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 1.0,
+    elevation: 2,
+    backgroundColor: 'white',
   },
   scannedItem: {
-    borderWidth: 1,
     borderRadius: 10,
     padding: 8,
     height: 50,
