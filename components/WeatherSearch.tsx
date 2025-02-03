@@ -12,9 +12,17 @@ export default function WeatherSearch({ setLastFive }: WeatherSearchTypes) {
   const [input, setInput] = useState('')
   return (
     <View style={styles.container}>
-      <TextInput placeholder="Search for a city" style={styles.searchInput} onChangeText={(text) => setInput(text)}/>
+      <TextInput
+        value={input}
+        placeholder="Search for a city"
+        style={styles.searchInput}
+        onChangeText={(text) => setInput(text)}
+      />
       <TouchableOpacity
-        onPress={() => setLastFive(input)}
+        onPress={() => {
+          setLastFive(input)
+          setInput('')
+        }}
         style={[styles.scannedItem, {backgroundColor: theme === 'light' ? 'black' : '#121211'}]}
       >
           <ThemedText style={{ fontSize: 22, color: 'white' }}>Search</ThemedText>

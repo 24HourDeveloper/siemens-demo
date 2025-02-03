@@ -2,12 +2,10 @@ import React, { useState } from 'react'
 import { View, FlatList, StyleSheet } from 'react-native'
 import { Camera } from 'react-native-camera-kit'
 import { ThemedText } from '@/components/ThemedText'
-import { useThemeColor } from '@/hooks/useThemeColor'
 import { useColorScheme } from '@/hooks/useColorScheme'
 
 export default function BarcodeScanner() {
   const [scannedCodes, setScannedCodes] = useState<string[]>([])
-  const color = useThemeColor({ light: "black", dark: 'white' }, 'text')
   const theme = useColorScheme() ?? 'light'
 
   const onBarcodeScan = (event: { nativeEvent: { codeStringValue: string } }) => {
