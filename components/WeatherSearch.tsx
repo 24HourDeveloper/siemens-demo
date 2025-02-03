@@ -1,7 +1,6 @@
 import { TextInput, StyleSheet, View, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { ThemedText } from './ThemedText'
-import { useThemeColor } from '@/hooks/useThemeColor'
 import { useColorScheme } from '@/hooks/useColorScheme'
 
 type WeatherSearchTypes = {
@@ -16,9 +15,9 @@ export default function WeatherSearch({ setLastFive }: WeatherSearchTypes) {
       <TextInput placeholder="Search for a city" style={styles.searchInput} onChangeText={(text) => setInput(text)}/>
       <TouchableOpacity
         onPress={() => setLastFive(input)}
-        style={[styles.scannedItem, {backgroundColor: theme === 'light' ? 'black' : 'white'}]}
+        style={[styles.scannedItem, {backgroundColor: theme === 'light' ? 'black' : '#121211'}]}
       >
-          <ThemedText style={{ fontSize: 22, color: theme === 'light' ? 'white' : 'black' }}>Search</ThemedText>
+          <ThemedText style={{ fontSize: 22, color: 'white' }}>Search</ThemedText>
       </TouchableOpacity>
     </View>
   )

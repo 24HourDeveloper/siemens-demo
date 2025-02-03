@@ -3,11 +3,12 @@ import React from 'react'
 import { Image } from 'expo-image'
 import { formatToDay } from '@/utils/formatToDay'
 import { WeatherDayType } from '@/types'
-import { useThemeColor } from '@/hooks/useThemeColor'
 import { ThemedText } from './ThemedText'
+import { useColorScheme } from '@/hooks/useColorScheme'
 
 export default function ForecastListView({ forecastDays }: { forecastDays: WeatherDayType[] | undefined }) {
-  const color = useThemeColor({ light: "black", dark: 'white' }, 'text')
+  const theme = useColorScheme() ?? 'light'
+  const color = theme === 'light' ? 'white' : '#121211'
   if (!forecastDays) return null
   return (
     <View style={styles.container}>  
@@ -17,7 +18,7 @@ export default function ForecastListView({ forecastDays }: { forecastDays: Weath
         horizontal
         keyExtractor={(item) => item.date}
         renderItem={({ item }) => (
-          <View style={[styles.forecastItem, { borderColor: color }]}>
+          <View style={[styles.forecastItem, { backgroundColor: color }]}>
             <ThemedText style={{ fontSize: 22 }}>{formatToDay(item.date)}</ThemedText>
             <Image
               source={{ uri: `https:${item.day.condition.icon}` }}
@@ -58,6 +59,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.18,
     shadowRadius: 1.0,
     elevation: 2,
-    backgroundColor: 'white',
   }
 })

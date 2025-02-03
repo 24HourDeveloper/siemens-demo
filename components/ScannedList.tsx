@@ -1,6 +1,6 @@
 import { FlatList, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
-import { useThemeColor } from '@/hooks/useThemeColor'
+import { useColorScheme } from '@/hooks/useColorScheme'
 
 type ScannedListTypes<T> = {
   items: T[]
@@ -9,7 +9,7 @@ type ScannedListTypes<T> = {
 }
 
 export default function ScannedList<T extends { id: string }>({ items, onPress, children }: ScannedListTypes<T>) {
-  const color = useThemeColor({ light: "black", dark: 'white' }, 'text')
+  const theme = useColorScheme() ?? 'light'
   return (
     <FlatList
       data={items}
@@ -17,7 +17,7 @@ export default function ScannedList<T extends { id: string }>({ items, onPress, 
       return (
         <TouchableOpacity
           onPress={() => onPress(item)}
-          style={[styles.scannedItem, {borderColor: color}]}
+          style={[styles.scannedItem, {backgroundColor: theme === 'light' ? 'white' : '#121211'}]}
         >
           {children(item)}
         </TouchableOpacity>
@@ -29,9 +29,16 @@ export default function ScannedList<T extends { id: string }>({ items, onPress, 
 
 const styles = StyleSheet.create({
   scannedItem: {
-    borderWidth: 1,
     borderRadius: 10,
     padding: 8,
-    marginBottom: 10
+    marginBottom: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 1.0,
+    elevation: 2,
   }
 })
