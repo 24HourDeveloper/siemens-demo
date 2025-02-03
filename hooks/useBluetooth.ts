@@ -5,6 +5,8 @@ import { BleManager, Device, Characteristic } from 'react-native-ble-plx'
 export default function useBluetooth() {
   const bluetoothManager = useMemo(() => new BleManager(), [])
   const [devices, setDevices] = useState<Device[]>([])
+  const [loading, setLoading] = useState(false)
+  const [connectionError, setConnectionError] = useState<null | string>(null)
   const [connectedDevice, setConnectedDevice] = useState<Device | null>(null)
   const [characteristics, setCharacteristics] = useState<Characteristic[]>([])
 
@@ -39,11 +41,11 @@ export default function useBluetooth() {
   useEffect(() => {
     requestBluetoothPermission()
     return () => {
-        bluetoothManager.destroy()
+      bluetoothManager.destroy()
     }
-  }, [])
+  }, [connectedDevice])
 
-  async function scanAndConnect() {
+  async function scanDevices() {
     setDevices([])
 
     bluetoothManager.startDeviceScan(null, null, (error, device) => {
@@ -68,6 +70,7 @@ export default function useBluetooth() {
   const connectToDevice = async (device: Device) => {
     let allCharacteristics = []
     try {
+      setLoading(true)
       const connectedDevice = await bluetoothManager.connectToDevice(device.id)
       await connectedDevice.discoverAllServicesAndCharacteristics()
       const services = await connectedDevice.services()
@@ -76,22 +79,24 @@ export default function useBluetooth() {
         const chars = await service.characteristics()
         allCharacteristics.push(...chars)
       }
-
+      setLoading(false)
       setConnectedDevice(connectedDevice)
       setCharacteristics(allCharacteristics)
       return true
     } catch (error) {
-      console.error('Connection error:', error)
-      Alert.alert('Error', 'Failed to connect to device')
+      setLoading(false)
+      setConnectionError(`Error: ${error}`)
       return false
     }
   }
 
   return {
     devices,
+    loading,
+    connectionError,
     connectedDevice,
     characteristics,
-    scanAndConnect,
+    scanDevices,
     connectToDevice
   }
 }

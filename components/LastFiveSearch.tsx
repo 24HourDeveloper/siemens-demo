@@ -1,7 +1,6 @@
 import { View, StyleSheet, FlatList } from 'react-native'
 import React from 'react'
 import { ThemedText } from './ThemedText'
-import { useThemeColor } from '@/hooks/useThemeColor'
 import { useColorScheme } from '@/hooks/useColorScheme'
 
 type LastFiveSearchTypes<T> = {
@@ -9,11 +8,10 @@ type LastFiveSearchTypes<T> = {
 }
 
 export default function LastFiveSearch({ items }: LastFiveSearchTypes<string>) {
-  const color = useThemeColor({ light: "black", dark: 'white' }, 'text')
   const theme = useColorScheme() ?? 'light'
   return (
     <View style={styles.container}>
-      <ThemedText type="title">Last Five Searched</ThemedText>
+      <ThemedText type="subtitle" style={{ textAlign: 'center'}}>Last Five Searched</ThemedText>
       <FlatList
         data={items.slice(0, 5)}
         renderItem={({ item }) => {

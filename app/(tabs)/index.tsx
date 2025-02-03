@@ -42,7 +42,7 @@ export default function Weather() {
       <WeatherSearch setLastFive={handleLastFive}/>
       <CurrentView weather={weather} />
       <ForecastListView forecastDays={weather?.forecast.forecastday} />
-      <LastFiveSearch items={lastFive} />
+      { lastFive.length <= 5 ? null : <LastFiveSearch items={lastFive} /> }
     </View>
   )
 }

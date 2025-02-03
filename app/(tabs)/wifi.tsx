@@ -1,10 +1,11 @@
 import { useState } from "react"
-import { View, Modal, TextInput, StyleSheet } from "react-native"
+import { View, TextInput, StyleSheet } from "react-native"
 import useWifi from "@/hooks/useWifi"
 import { ThemedText } from "@/components/ThemedText"
 import HardwareHeader from "@/components/HardwareHeader"
 import ScannedList from "@/components/ScannedList"
 import Button from "@/components/Button"
+import HardwareModal from "@/components/HardwareModal"
 
 export default function WifiScanner() {
   const [modalVisible, setModalVisible] = useState(false)
@@ -33,34 +34,28 @@ export default function WifiScanner() {
           </>
         )}
       </ScannedList>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
+      <HardwareModal
+        isOpen={modalVisible}
+        setIsOpen={setModalVisible}
       >
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <View style={{display: 'flex', gap: 10, backgroundColor: 'white', width: '90%', padding: 5, borderRadius: 10}}>
-            <TextInput
-              value={input}
-              placeholder="Enter Password"
-              style={styles.searchInput}
-              secureTextEntry
-              onChangeText={(text) => setInput(text)}
-            />
-            <Button text="Submit" onPress={() => {
-                connectToWifi(item?.SSID, input)
-                setInput('')
-              }}
-            />
-            <Button text="Close" onPress={() => {
-                setInput('')
-                setModalVisible(false)
-              }}
-            />
-          </View>
-        </View>
-      </Modal>
+        <TextInput
+          value={input}
+          placeholder="Enter Password"
+          style={styles.searchInput}
+          secureTextEntry
+          onChangeText={(text) => setInput(text)}
+        />
+        <Button text="Submit" onPress={() => {
+            connectToWifi(item?.SSID, input)
+            setInput('')
+          }}
+        />
+        <Button text="Close" onPress={() => {
+            setInput('')
+            setModalVisible(false)
+          }}
+        />
+      </HardwareModal>
     </View>
   )
 }
