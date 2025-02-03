@@ -4,7 +4,8 @@ import { Image } from 'expo-image'
 import { WeatherType } from '@/types'
 import { ThemedText } from './ThemedText'
 
-export default function CurrentView({ weather }: { weather: WeatherType }) {
+export default function CurrentView({ weather }: { weather: WeatherType | null }) {
+  if (!weather) return null
   return (
     <View style={styles.container}>
       <ThemedText type="title">{weather.current.condition.text}</ThemedText>

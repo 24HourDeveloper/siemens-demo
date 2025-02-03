@@ -6,8 +6,9 @@ import { WeatherDayType } from '@/types'
 import { useThemeColor } from '@/hooks/useThemeColor'
 import { ThemedText } from './ThemedText'
 
-export default function ForecastListView({ forecastDays }: { forecastDays: WeatherDayType[] }) {
+export default function ForecastListView({ forecastDays }: { forecastDays: WeatherDayType[] | undefined }) {
   const color = useThemeColor({ light: "black", dark: 'white' }, 'text')
+  if (!forecastDays) return null
   return (
     <View style={styles.container}>  
       <ThemedText type="title">5 Day Forecast</ThemedText>

@@ -22,9 +22,9 @@ export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
 export default function Weather() {
   const [lastFive, setLastFive] = useState<string[]>([])
   const {searchWeather, search} = useWeatherSearch()
-  const weather = useForecast(search)
+  const {weather, loading} = useForecast(search)
 
-  if (!weather) {
+  if (loading) {
     return (
       <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 1}}>
         <ActivityIndicator size="large" />
@@ -41,7 +41,7 @@ export default function Weather() {
     <View style={{padding: 10}}>
       <WeatherSearch setLastFive={handleLastFive}/>
       <CurrentView weather={weather} />
-      <ForecastListView forecastDays={weather.forecast.forecastday} />
+      <ForecastListView forecastDays={weather?.forecast.forecastday} />
       <LastFiveSearch items={lastFive} />
     </View>
   )
