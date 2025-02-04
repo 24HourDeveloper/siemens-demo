@@ -1,4 +1,4 @@
-import { PermissionsAndroid, Platform, Alert } from 'react-native'
+import { PermissionsAndroid, Platform } from 'react-native'
 import { useMemo, useEffect, useState } from 'react'
 import { BleManager, Device, Characteristic } from 'react-native-ble-plx'
 

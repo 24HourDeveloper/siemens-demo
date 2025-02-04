@@ -1,5 +1,6 @@
 import React from 'react'
 import { TextInput, StyleSheet, StyleProp, TextStyle } from 'react-native'
+import { Colors } from '@/constants/Colors'
 
 type InputTypes = {
   text: string
@@ -10,13 +11,14 @@ type InputTypes = {
 }
 
 export default function Input({ text, setText, placeholder, password, styles }: InputTypes) {
+  const { shadow } = Colors
   return (
     <TextInput
       value={text}
       placeholder={placeholder}
       secureTextEntry={password}
       onChangeText={(text) => setText(text)}
-      style={[stylesSheet.searchInput, styles]}
+      style={[stylesSheet.searchInput, styles, shadow]}
     />
   )
 }
@@ -27,14 +29,6 @@ const stylesSheet = StyleSheet.create({
     borderRadius: 10,
     height: 50,
     paddingLeft: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 2,
-      height: 2,
-    },
-    shadowOpacity: 0.4,
-    shadowRadius: 1.0,
-    elevation: 2,
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
 })

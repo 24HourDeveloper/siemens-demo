@@ -2,11 +2,10 @@ import React, { useState } from 'react'
 import { View, FlatList, StyleSheet } from 'react-native'
 import { Camera } from 'react-native-camera-kit'
 import { ThemedText } from '@/components/ThemedText'
-import { useColorScheme } from '@/hooks/useColorScheme'
+import ListItemContainer from '@/components/ListItemContainer'
 
 export default function BarcodeScanner() {
   const [scannedCodes, setScannedCodes] = useState<string[]>([])
-  const theme = useColorScheme() ?? 'light'
 
   const onBarcodeScan = (event: { nativeEvent: { codeStringValue: string } }) => {
     const scannedValue = event.nativeEvent.codeStringValue
@@ -38,9 +37,11 @@ export default function BarcodeScanner() {
             data={scannedCodes}
             keyExtractor={(item) => item.toString()}
             renderItem={({ item }) => {
-              return <View style={[styles.scannedItem, { backgroundColor: theme === 'light' ? 'white' : '#121211' }]}>
-                <ThemedText>{item}</ThemedText>
-              </View>
+              return (
+                <ListItemContainer>
+                  <ThemedText>{item}</ThemedText>
+                </ListItemContainer>
+              )
             }}
           />
         </View>
@@ -56,18 +57,5 @@ const styles = StyleSheet.create({
   listContainer: {
     padding: 10,
     flex: 1
-  },
-  scannedItem: {
-    borderRadius: 10,
-    padding: 8,
-    marginBottom: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 2,
-      height: 2,
-    },
-    shadowOpacity: 0.4,
-    shadowRadius: 1.0,
-    elevation: 2,
   }
 })
