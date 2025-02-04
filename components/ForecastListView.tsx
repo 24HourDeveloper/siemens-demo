@@ -5,6 +5,7 @@ import { formatToDay } from '@/utils/formatToDay'
 import { WeatherDayType } from '@/types'
 import { ThemedText } from './ThemedText'
 import { useColorScheme } from '@/hooks/useColorScheme'
+import TemperatureText from './TemperatureText'
 
 export default function ForecastListView({ forecastDays }: { forecastDays: WeatherDayType[] | undefined }) {
   const theme = useColorScheme() ?? 'light'
@@ -19,13 +20,13 @@ export default function ForecastListView({ forecastDays }: { forecastDays: Weath
         keyExtractor={(item) => item.date}
         renderItem={({ item }) => (
           <View style={[styles.forecastItem, { backgroundColor: color }]}>
-            <ThemedText style={{ fontSize: 22 }}>{formatToDay(item.date)}</ThemedText>
+            <ThemedText style={{ fontSize: 24 }}>{formatToDay(item.date)}</ThemedText>
             <Image
               source={{ uri: `https:${item.day.condition.icon}` }}
               style={{ width: 60, height: 60 }}
             />
-            <ThemedText style={{ fontSize: 22 }}>{item.day.maxtemp_f}°</ThemedText>
-            <ThemedText style={{ fontSize: 22 }}>{item.day.mintemp_f}°</ThemedText>
+            <TemperatureText size="sm" temp={item.day.maxtemp_f} />
+            <TemperatureText size="sm" temp={item.day.mintemp_f} />
           </View>
         )}
         contentContainerStyle={styles.forecastScrollContainer}
@@ -49,6 +50,7 @@ const styles = StyleSheet.create({
   forecastItem: {
     borderRadius: 10,
     display: 'flex',
+    gap: 10,
     alignItems: 'center',
     padding: 10,
     shadowColor: '#000',
