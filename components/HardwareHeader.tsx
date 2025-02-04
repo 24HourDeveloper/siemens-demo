@@ -12,7 +12,7 @@ type HardwareHeaderTypes = {
 export default function HardwareHeader ({ title, scanBtnText, scanAction }: HardwareHeaderTypes) {
   return (
     <View style={styles.container}>
-      <ThemedText style={{ fontSize: 20 }}>{title}</ThemedText>
+      <ThemedText style={{ fontSize: 24 }}>{title}</ThemedText>
       <Button text={scanBtnText} onPress={scanAction} />
     </View>
   )
