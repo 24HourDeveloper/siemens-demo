@@ -1,5 +1,5 @@
 import { View, Modal, StyleSheet } from 'react-native'
-import { useState, ReactNode } from 'react'
+import { ReactNode } from 'react'
 
 type HardwareModalTypes = {
   isOpen: boolean

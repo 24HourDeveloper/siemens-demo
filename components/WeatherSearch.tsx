@@ -1,22 +1,21 @@
-import { TextInput, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React, { useState } from 'react'
-import { useColorScheme } from '@/hooks/useColorScheme'
 import Button from './Button'
+import Input from './Input'
 
 type WeatherSearchTypes = {
   setLastFive: (text: string) => void
 }
 
 export default function WeatherSearch({ setLastFive }: WeatherSearchTypes) {
-  const theme = useColorScheme() ?? 'light'
   const [input, setInput] = useState('')
   return (
     <View style={styles.container}>
-      <TextInput
-        value={input}
+      <Input
+        text={input}
+        setText={setInput}
         placeholder="Search for a city"
-        style={styles.searchInput}
-        onChangeText={(text) => setInput(text)}
+        styles={{ flex: 3 }}
       />
       <Button
         text={'Search'}
@@ -31,22 +30,6 @@ export default function WeatherSearch({ setLastFive }: WeatherSearchTypes) {
 }
 
 const styles = StyleSheet.create({
-  searchInput: {
-    fontSize: 24,
-    borderRadius: 10,
-    height: 50,
-    paddingLeft: 10,
-    flex: 3,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 2,
-      height: 2,
-    },
-    shadowOpacity: 0.4,
-    shadowRadius: 1.0,
-    elevation: 2,
-    backgroundColor: 'white',
-  },
   searchBtn: {
     height: 50,
     display: 'flex',

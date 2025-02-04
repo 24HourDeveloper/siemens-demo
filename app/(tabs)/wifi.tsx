@@ -1,11 +1,12 @@
 import { useState } from "react"
-import { View, TextInput, StyleSheet } from "react-native"
+import { View } from "react-native"
 import useWifi from "@/hooks/useWifi"
 import { ThemedText } from "@/components/ThemedText"
 import HardwareHeader from "@/components/HardwareHeader"
 import ScannedList from "@/components/ScannedList"
 import Button from "@/components/Button"
 import HardwareModal from "@/components/HardwareModal"
+import Input from "@/components/Input"
 
 export default function WifiScanner() {
   const [modalVisible, setModalVisible] = useState(false)
@@ -38,12 +39,11 @@ export default function WifiScanner() {
         isOpen={modalVisible}
         setIsOpen={setModalVisible}
       >
-        <TextInput
-          value={input}
+        <Input
+          text={input}
+          setText={setInput}
           placeholder="Enter Password"
-          style={styles.searchInput}
-          secureTextEntry
-          onChangeText={(text) => setInput(text)}
+          password={true}
         />
         <Button text="Submit" onPress={() => {
             connectToWifi(item?.SSID, input)
@@ -60,20 +60,3 @@ export default function WifiScanner() {
   )
 }
 
-const styles = StyleSheet.create({
-  searchInput: {
-    fontSize: 22,
-    borderRadius: 10,
-    height: 50,
-    paddingLeft: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 2,
-      height: 2,
-    },
-    shadowOpacity: 0.4,
-    shadowRadius: 1.0,
-    elevation: 2,
-    backgroundColor: 'white',
-  },
-})
