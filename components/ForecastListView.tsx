@@ -1,13 +1,14 @@
-import { View, ScrollView, StyleSheet, FlatList } from 'react-native'
+import { View, StyleSheet, FlatList } from 'react-native'
 import React from 'react'
 import { Image } from 'expo-image'
 import { formatToDay } from '@/utils/formatToDay'
 import { WeatherDayType } from '@/types'
-import { useThemeColor } from '@/hooks/useThemeColor'
 import { ThemedText } from './ThemedText'
+import TemperatureText from './TemperatureText'
+import ListItemContainer from './ListItemContainer'
 
-export default function ForecastListView({ forecastDays }: { forecastDays: WeatherDayType[] }) {
-  const color = useThemeColor({ light: "black", dark: 'white' }, 'text')
+export default function ForecastListView({ forecastDays }: { forecastDays: WeatherDayType[] | undefined }) {
+  if (!forecastDays) return null
   return (
     <View style={styles.container}>  
       <ThemedText type="title">5 Day Forecast</ThemedText>
@@ -16,15 +17,15 @@ export default function ForecastListView({ forecastDays }: { forecastDays: Weath
         horizontal
         keyExtractor={(item) => item.date}
         renderItem={({ item }) => (
-          <View style={[styles.forecastItem, { borderColor: color }]}>
-            <ThemedText style={{ fontSize: 22 }}>{formatToDay(item.date)}</ThemedText>
+          <ListItemContainer styles={styles.forecastItem}>
+            <ThemedText style={{ fontSize: 24 }}>{formatToDay(item.date)}</ThemedText>
             <Image
               source={{ uri: `https:${item.day.condition.icon}` }}
               style={{ width: 60, height: 60 }}
             />
-            <ThemedText style={{ fontSize: 22 }}>{item.day.maxtemp_f}°</ThemedText>
-            <ThemedText style={{ fontSize: 22 }}>{item.day.mintemp_f}°</ThemedText>
-          </View>
+            <TemperatureText size="sm" temp={item.day.maxtemp_f} />
+            <TemperatureText size="sm" temp={item.day.mintemp_f} />
+          </ListItemContainer>
         )}
         contentContainerStyle={styles.forecastScrollContainer}
       />
@@ -41,15 +42,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   forecastScrollContainer: {
-    display: 'flex',
     gap: 10,
+    display: 'flex',
   },
   forecastItem: {
-    borderWidth: 1,
-    borderRadius: 10,
     display: 'flex',
+    gap: 10,
     alignItems: 'center',
-    padding: 10,
-    
   }
 })

@@ -1,42 +1,36 @@
-import { TextInput, StyleSheet, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React, { useState } from 'react'
-import { ThemedText } from './ThemedText'
-import { useThemeColor } from '@/hooks/useThemeColor'
+import Button from './Button'
+import Input from './Input'
 
 type WeatherSearchTypes = {
   setLastFive: (text: string) => void
 }
 
 export default function WeatherSearch({ setLastFive }: WeatherSearchTypes) {
-  const color = useThemeColor({ light: "black", dark: 'white' }, 'text')
   const [input, setInput] = useState('')
-
   return (
     <View style={styles.container}>
-      <TextInput placeholder="Search for a city" style={styles.searchInput} onChangeText={(text) => setInput(text)}/>
-      <TouchableOpacity
-        onPress={() => setLastFive(input)}
-        style={[styles.scannedItem, {borderColor: color}]}
-      >
-          <ThemedText style={{ fontSize: 22 }}>Search</ThemedText>
-      </TouchableOpacity>
+      <Input
+        text={input}
+        setText={setInput}
+        placeholder="Search for a city"
+        styles={{ flex: 3 }}
+      />
+      <Button
+        text={'Search'}
+        styles={styles.searchBtn}
+        onPress={() => {
+          setLastFive(input)
+          setInput('')
+        }}
+      />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  searchInput: {
-    borderWidth: 1,
-    fontSize: 22,
-    borderRadius: 10,
-    height: 50,
-    paddingLeft: 10,
-    flex: 3
-  },
-  scannedItem: {
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 8,
+  searchBtn: {
     height: 50,
     display: 'flex',
     justifyContent: 'center',

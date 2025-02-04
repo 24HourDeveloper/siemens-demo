@@ -1,26 +1,25 @@
 import { View, StyleSheet, FlatList } from 'react-native'
 import React from 'react'
 import { ThemedText } from './ThemedText'
-import { useThemeColor } from '@/hooks/useThemeColor'
+import ListItemContainer from './ListItemContainer'
 
 type LastFiveSearchTypes<T> = {
   items: T[]
 }
 
 export default function LastFiveSearch({ items }: LastFiveSearchTypes<string>) {
-  const color = useThemeColor({ light: "black", dark: 'white' }, 'text')
   return (
     <View style={styles.container}>
-      <ThemedText type="title">Last Five Searched</ThemedText>
+      <ThemedText type="subtitle" style={{ textAlign: 'center'}}>
+        Last Five Searched
+      </ThemedText>
       <FlatList
         data={items.slice(0, 5)}
         renderItem={({ item }) => {
         return (
-          <View
-            style={[styles.scannedItem, {borderColor: color}]}
-          >
+          <ListItemContainer styles={{ display: 'flex', alignItems: 'center' }}>
             <ThemedText style={{ fontSize: 22 }}>{item}</ThemedText>
-          </View>
+          </ListItemContainer>
         )}}
         keyExtractor={item => item}
       />
@@ -29,18 +28,10 @@ export default function LastFiveSearch({ items }: LastFiveSearchTypes<string>) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: 10,
-      marginTop: 20,
-      height: 200,
-    },
-    scannedItem: {
-      borderWidth: 1,
-      borderRadius: 10,
-      padding: 8,
-      marginBottom: 10,
-      display: 'flex',
-    }
-  })
+  container: {
+    display: 'flex',
+    gap: 10,
+    marginTop: 20,
+    height: 200,
+  }
+})

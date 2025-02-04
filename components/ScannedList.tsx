@@ -1,6 +1,6 @@
-import { FlatList, TouchableOpacity, StyleSheet } from 'react-native'
+import { FlatList } from 'react-native'
 import React from 'react'
-import { useThemeColor } from '@/hooks/useThemeColor'
+import ListItemContainer from './ListItemContainer'
 
 type ScannedListTypes<T> = {
   items: T[]
@@ -9,29 +9,16 @@ type ScannedListTypes<T> = {
 }
 
 export default function ScannedList<T extends { id: string }>({ items, onPress, children }: ScannedListTypes<T>) {
-  const color = useThemeColor({ light: "black", dark: 'white' }, 'text')
   return (
     <FlatList
       data={items}
       renderItem={({ item }) => {
       return (
-        <TouchableOpacity
-          onPress={() => onPress(item)}
-          style={[styles.scannedItem, {borderColor: color}]}
-        >
+        <ListItemContainer onPress={() => onPress(item)} touchable={true}>
           {children(item)}
-        </TouchableOpacity>
+        </ListItemContainer>
       )}}
       keyExtractor={item => item.id}
     />
   )
 }
-
-const styles = StyleSheet.create({
-  scannedItem: {
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 8,
-    marginBottom: 10
-  }
-})

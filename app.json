@@ -54,6 +54,7 @@
     },
     "extra": {
       "FORECAST_URL": "http://api.weatherapi.com/v1/forecast.json?key=",
+      "WEATHER_API_KEY": "c45f631ba4634eaba90225830252801",
       "router": {
         "origin": false
       },
